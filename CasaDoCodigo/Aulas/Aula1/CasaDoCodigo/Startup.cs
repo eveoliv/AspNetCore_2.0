@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CasaDoCodigo
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -20,15 +20,21 @@ namespace CasaDoCodigo
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // Cria, adicionar os servicos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
             services.AddDbContext<ApplicationContext>(options => 
                 options.UseMySql(Configuration.GetConnectionString("Default")));
+
+            services.AddTransient<IDataService, DataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        // Consome o servico, pipiline, injecao de dependencia
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
+                              IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +54,8 @@ namespace CasaDoCodigo
                     name: "default",
                     template: "{controller=Pedido}/{action=Carrossel}/{id?}");
             });
+            //Cria o DB na execucao do codigo (EnsureCreated() nao utiliza a migration)
+            serviceProvider.GetService<IDataService>().InicializaDB();                
         }
     }
 }
