@@ -16,11 +16,8 @@ namespace CasaDoCodigo.Models
 
     public class Produto : BaseModel
     {
-        public Produto()
-        {
-
-        }
-
+        public Produto(){}
+        [Key]
         [Required]
         public string Codigo { get; private set; }
         [Required]
@@ -38,9 +35,7 @@ namespace CasaDoCodigo.Models
 
     public class Cadastro : BaseModel
     {
-        public Cadastro()
-        {
-        }
+        public Cadastro(){}
 
         public virtual Pedido Pedido { get; set; }
         [Required]
@@ -74,10 +69,7 @@ namespace CasaDoCodigo.Models
         [Required]
         public decimal PrecoUnitario { get; private set; }
 
-        public ItemPedido()
-        {
-
-        }
+        public ItemPedido(){}
 
         public ItemPedido(Pedido pedido, Produto produto, int quantidade, decimal precoUnitario)
         {

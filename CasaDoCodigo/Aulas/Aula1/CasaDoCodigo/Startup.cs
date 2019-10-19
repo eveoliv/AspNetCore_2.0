@@ -24,7 +24,7 @@ namespace CasaDoCodigo
         {
             services.AddMvc();
             services.AddDbContext<ApplicationContext>(options => 
-                options.UseMySQL(Configuration.GetConnectionString("Default")));
+                options.UseMySql(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
