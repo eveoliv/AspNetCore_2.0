@@ -21,13 +21,17 @@ namespace CasaDoCodigo
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // Cria, adicionar os servicos
+        // Cria/adicionar os servicos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
-            services.AddDbContext<ApplicationContext>(options => 
-                options.UseMySql(Configuration.GetConnectionString("Default")));
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
+            var con = Configuration.GetConnectionString("Default");
+            services.AddDbContext<ApplicationContext>(options => options.UseMySql(con));
+
             services.AddTransient<IDataService, DataService>();
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();
@@ -51,6 +55,7 @@ namespace CasaDoCodigo
             }
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
