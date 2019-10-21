@@ -56,7 +56,7 @@ namespace CasaDoCodigo
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Pedido}/{action=Carrossel}/{id?}");
+                    template: "{controller=Pedido}/{action=Carrossel}/{codigo?}");
             });
             //Cria o DB na execucao do codigo (EnsureCreated() nao utiliza a migration)
             serviceProvider.GetService<IDataService>().InicializaDB();                
