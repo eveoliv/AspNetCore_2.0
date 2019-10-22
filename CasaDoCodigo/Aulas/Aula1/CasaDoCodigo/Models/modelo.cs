@@ -10,6 +10,7 @@ namespace CasaDoCodigo.Models
     [DataContract]
     public class BaseModel
     {
+        [Key]
         [DataMember]
         public int Id { get; protected set; }
     }
@@ -80,7 +81,7 @@ namespace CasaDoCodigo.Models
     }
 
     public class Pedido : BaseModel
-    {
+    {        
         public Pedido()
         {
             Cadastro = new Cadastro();
