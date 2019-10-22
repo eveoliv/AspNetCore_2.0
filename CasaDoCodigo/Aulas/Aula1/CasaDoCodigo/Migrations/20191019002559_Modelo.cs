@@ -7,16 +7,26 @@ namespace CasaDoCodigo.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Codigo",
-                table: "Produto",
-                nullable: false,
-                oldClrType: typeof(string));
-
-            migrationBuilder.AddUniqueConstraint(
-                name: "AK_Produto_Codigo",
-                table: "Produto",
-                column: "Codigo");
+            migrationBuilder.CreateTable(
+                name: "Cadastro",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Bairro = table.Column<string>(nullable: false),
+                    CEP = table.Column<string>(nullable: false),
+                    Complemento = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Endereco = table.Column<string>(nullable: false),
+                    Municipio = table.Column<string>(nullable: false),
+                    Nome = table.Column<string>(nullable: false),
+                    Telefone = table.Column<string>(nullable: false),
+                    UF = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cadastro", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Pedido",
@@ -29,30 +39,10 @@ namespace CasaDoCodigo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pedido", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cadastro",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
-                    Telefone = table.Column<string>(nullable: false),
-                    Endereco = table.Column<string>(nullable: false),
-                    Complemento = table.Column<string>(nullable: false),
-                    Bairro = table.Column<string>(nullable: false),
-                    Municipio = table.Column<string>(nullable: false),
-                    UF = table.Column<string>(nullable: false),
-                    CEP = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cadastro", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cadastro_Pedido_Id",
-                        column: x => x.Id,
-                        principalTable: "Pedido",
+                        name: "FK_Pedido_Cadastro_CadastroId",
+                        column: x => x.CadastroId,
+                        principalTable: "Cadastro",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -64,9 +54,9 @@ namespace CasaDoCodigo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     PedidoId = table.Column<int>(nullable: false),
+                    PrecoUnitario = table.Column<decimal>(nullable: false),
                     ProdutoId = table.Column<int>(nullable: false),
-                    Quantidade = table.Column<int>(nullable: false),
-                    PrecoUnitario = table.Column<decimal>(nullable: false)
+                    Quantidade = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,28 +84,24 @@ namespace CasaDoCodigo.Migrations
                 name: "IX_ItemPedido_ProdutoId",
                 table: "ItemPedido",
                 column: "ProdutoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pedido_CadastroId",
+                table: "Pedido",
+                column: "CadastroId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Cadastro");
-
             migrationBuilder.DropTable(
                 name: "ItemPedido");
 
             migrationBuilder.DropTable(
                 name: "Pedido");
 
-            migrationBuilder.DropUniqueConstraint(
-                name: "AK_Produto_Codigo",
-                table: "Produto");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Codigo",
-                table: "Produto",
-                nullable: false,
-                oldClrType: typeof(string));
+            migrationBuilder.DropTable(
+                name: "Cadastro");
         }
     }
 }
