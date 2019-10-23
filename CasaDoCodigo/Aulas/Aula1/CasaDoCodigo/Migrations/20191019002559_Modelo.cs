@@ -34,7 +34,7 @@ namespace CasaDoCodigo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CadastroId = table.Column<int>(nullable: false)
+                    CadastroId = table.Column<int>(nullable: true)                   
                 },
                 constraints: table =>
                 {

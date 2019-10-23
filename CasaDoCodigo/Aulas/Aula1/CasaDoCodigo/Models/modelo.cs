@@ -38,6 +38,7 @@ namespace CasaDoCodigo.Models
         public Cadastro(){}
 
         public virtual Pedido Pedido { get; set; }
+        
         [Required]
         public string Nome { get; set; } = "";
         [Required]
