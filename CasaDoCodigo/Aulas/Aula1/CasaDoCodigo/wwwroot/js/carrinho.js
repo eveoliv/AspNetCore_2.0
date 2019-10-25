@@ -16,7 +16,7 @@
         this.postQuantidade(data);
     }
 
-     getData(elemento) {
+    getData(elemento) {
         var linhaDoItem = $(elemento).parents('[item-id]');
         var itemId = $(linhaDoItem).attr('item-id');
         var novaQtde = $(linhaDoItem).find('input').val();
@@ -33,6 +33,12 @@
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)
+        }).done(function (response) {
+            let itemPedido = response.itemPedido;
+            let carrinhoViewModel = response.carrinhoViewModel;
+
+            console.log(JSON.stringify(itemPedido));
+            console.log(JSON.stringify(carrinhoViewModel));
         });
     }
 }
