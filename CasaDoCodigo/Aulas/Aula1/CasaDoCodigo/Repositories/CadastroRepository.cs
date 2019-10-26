@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace CasaDoCodigo.Repositories
 {
-    public interface ICadastroRepository { }
+    public interface ICadastroRepository
+    {
+        Cadastro Update(int cadastroId, Cadastro novoCadastro);
+    }
 
     public class CadastroRepository : BaseRepository<Cadastro>, ICadastroRepository
     {

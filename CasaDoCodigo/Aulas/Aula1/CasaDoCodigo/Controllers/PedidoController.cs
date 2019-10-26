@@ -40,11 +40,19 @@ namespace CasaDoCodigo.Controllers
             return base.View(carrinhoViewModel);
         }
 
-        public IActionResult Cadastro()
+        public IActionResult Cadastro(Cadastro cadastro)
         {
-            return View();
+            var pedido = pedidoRepository.GetPedido();
+
+            if (pedido == null)
+            {
+                return RedirectToAction("Carrossel");
+            }
+
+            return View(pedido.Cadastro);
         }
 
+        [HttpPost]
         public IActionResult Resumo()
         {
             Pedido pedido = pedidoRepository.GetPedido();
